@@ -67,3 +67,5 @@ typings/
 ### Exclude IDEA project files ###
 .idea/
 *.iml
+### Exclude Eclipse project files ###
+.project
