@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Работа с DOM в браузерном Javascript</title>
+</head>
+<body>
+    
+    <form method="GET" action="/" id="sendMessage">
+        <label for="first-name">Имя:</label><br>
+        <input type="text" id="first-name" name="first-name"><br>
+        <label for="message">Сообщение:</label><br> 
+        <textarea name="message" cols="80"></textarea><br>
+        <input type="checkbox" id="send-replies" name="send-replies" value="1">
+        <label for="send-replies">Отправлять мне ответы на email</label><br>
+        <input type="submit" value="Отправить">
+    </form>
+    <script type="text/javascript">
+    // метод console.log в браузерном Javascript позволяет выводить в консоль разработчика
+    // значение любых переменных (как строки и числа, так и объекты, массивы и функции)
+    var a = 1,
+        b = 'строка',
+        c = {
+            field:'строка как поле объекта', 
+            'some array': [1,2,'строка как элемент массива',{name:'some name'}],
+            method: function(str){
+                return '"' + str + '" - первый аргумент метода method';
+            }
+        };
+    console.log(c);
+    console.log(a, b, c.field);
+    console.log(c['some array']);
+    console.log(c.method);
+    console.log(c.method('аргумент-строка'));
+    var d = c['some array'];
+    console.log(d[3]);
+    // у массивов Javascript есть встроенное свойство length, хранящее длину массива
+    console.log(d.length);
+    // можно выводить в консоль и HTML-элементы
+    console.log(document.createElement('div'));
+    
+    // выведите в консоль элемент <form>, используя метод getElementById объекта document
+    
+    // выведите в консоль массив всех элементов с тэгом <input> в документе,
+    // используя метод getElementsByTagName объекта document
+    
+    // присвойте переменной brElement значение - новый HTML-элемент с тэгом <br>
+    
+    // присвойте переменной textNode значение - текстовый узел DOM с текстом:
+    // Нажмите "Отправить" для отправки сообщения
+    
+    // добавьте в элемент <form> два узла в конце - элемент <br> из переменной brElement
+    // и текстовый элемент из переменной textNode, используя метод appendChild элемента <form>
+    
+    // присвойте переменной labelElement значение - первый элемент с тэгом <label> в документе
+    
+    // присвойте переменной inputElement значение - первый элемент с тэгом <input> в документе
+    
+    // удалите из элемента <form> элементы, хранящиеся в переменных labelElement и inputElement,
+    // используя метод removeChild элемента <form>
+    
+    // измените значение атрибута cols элемента <textarea> на 120, используя метод setAttribute
+    
+    // самая часто используемая форма цикла в Javascript начинается с трех выражений - инициализации
+    // счетчика итераций, проверку условия и приращения счетчика итераций - в круглых скобках
+    // и последующего тела цикла в фигурных скобках
+    // выводим стилевое значение fontWeight для всех элементов с тэгом <label> в консоль:
+    var labels = document.getElementsByTagName('label');
+    for (var i=0;i<labels.length;i++) {
+        console.log(labels[i].style.fontWeight);
+    }
+    // присвойте в цикле для всех элементов c тэгом label значение "bold" стилевому свойству fontWeight
+    
+    </script>
+</body>
+</html>
