@@ -9,7 +9,7 @@
         <label for="first-name">Имя:</label><br>
         <input type="text" id="first-name" name="first-name"><br>
         <label for="message">Сообщение:</label><br> 
-        <textarea name="message" cols="80"></textarea><br>
+        <textarea name="message" cols="80" id="message"></textarea><br>
         <input type="checkbox" id="send-replies" name="send-replies" value="1">
         <label for="send-replies">Отправлять мне ответы на email</label><br>
         <input type="submit" value="Отправить">
@@ -39,27 +39,29 @@
     console.log(document.createElement('div'));
     
     // выведите в консоль элемент <form>, используя метод getElementById объекта document
-    
+    console.log(document.getElementById("sendMessage"));
     // выведите в консоль массив всех элементов с тэгом <input> в документе,
     // используя метод getElementsByTagName объекта document
-    
+    console.log(document.getElementsByTagName("input"));
     // присвойте переменной brElement значение - новый HTML-элемент с тэгом <br>
-    
+    var brElement = document.createElement("br");
     // присвойте переменной textNode значение - текстовый узел DOM с текстом:
     // Нажмите "Отправить" для отправки сообщения
-    
+    var textNode = document.createTextNode("Нажмите \"Отправить\" для отправки сообщения");
     // добавьте в элемент <form> два узла в конце - элемент <br> из переменной brElement
     // и текстовый элемент из переменной textNode, используя метод appendChild элемента <form>
-    
+    document.getElementById("sendMessage").appendChild(brElement);
+    document.getElementById("sendMessage").appendChild(textNode);
     // присвойте переменной labelElement значение - первый элемент с тэгом <label> в документе
-    
+    var labelElement = document.getElementsByTagName("label")[0];
     // присвойте переменной inputElement значение - первый элемент с тэгом <input> в документе
-    
+    var inputElement = document.getElementsByTagName("input")[0];
     // удалите из элемента <form> элементы, хранящиеся в переменных labelElement и inputElement,
     // используя метод removeChild элемента <form>
-    
+    document.getElementById("sendMessage").removeChild(labelElement);
+    document.getElementById("sendMessage").removeChild(inputElement);
     // измените значение атрибута cols элемента <textarea> на 120, используя метод setAttribute
-    
+    document.getElementsByTagName("textarea")[0].setAttribute("cols", "120");
     // самая часто используемая форма цикла в Javascript начинается с трех выражений - инициализации
     // счетчика итераций, проверку условия и приращения счетчика итераций - в круглых скобках
     // и последующего тела цикла в фигурных скобках
@@ -69,7 +71,10 @@
         console.log(labels[i].style.fontWeight);
     }
     // присвойте в цикле для всех элементов c тэгом label значение "bold" стилевому свойству fontWeight
-    
+    labels = document.getElementsByTagName('label');
+    for (i=0;i<labels.length;i++) {
+        labels[i].style.fontWeight = "bold";
+    }
     </script>
 </body>
 </html>
