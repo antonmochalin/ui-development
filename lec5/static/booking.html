@@ -8,7 +8,7 @@
 <body>
     <h1>Бронирование ресторана</h1>
     <div id="month">
-        <div id="prevMonth" onclick="prevMonth()">&lt;&lt;</div>
+        <div id="prevMonth" onclick="previousMonth()">&lt;&lt;</div>
         <div id="currentMonth"></div>
         <div id="nextMonth" onclick="nextMonth()">&gt;&gt;</div>
     </div>
@@ -62,7 +62,14 @@
         // используя итерацию по массиву childNodes таблицы
         // #monthGridTable и метод removeChild, удаляя все элементы
         // с тэгом tr, начиная со второго
-        
+        var childRows = monthTableElement.getElementsByTagName('tr');
+        console.log(childRows);
+        for ( i = childRows.length - 1; i > 0; i--){
+            var childRow = childRows[i];
+            console.log(childRow);
+            console.log(i);
+            monthTableElement.removeChild(childRow);
+        }
         // добавление строк - итерация по массиву gridModel и затем
         // по каждому из массивов - элементов gridModel
         for (i = 0; i < gridModel.length; i++) {
@@ -70,25 +77,10 @@
                 // создание строки таблицы
                 weekRow = document.createElement('tr');
             for (j = 0; j < weekModel.length; j++) {
-                var dayModel = weekModel[j],
+                var dayModel = weekModel[j];
                     // создание ячейки таблицы
-                    dayCell = document.createElement('td');
-                // добавьте обработчик события "click" элементу в переменной
-                // dayCell, используя метод addEventListener(eventType, handlerFunction)
-                // только для тех ячеек, для которых дата относится к выбранному месяцу;
-                // по клику необходимо вызвать функцию showAddEditForm, передавая ей
-                // значение переменной dayModel
-                
-                // добавьте присвоение класса inactive, если дата не относится
-                // к выбранному месяцу
-                // используйте поле className элемента
-                
-                // добавьте присвоение класса booked ячейкам, для которых в переменной dayModel
-                // задано (т.е. не равно undefined) поле info
-                
-                // добавление текста с номером дня месяца в ячейку таблицы
-                dayCell.appendChild(document.createTextNode(dayModel.date.getDate()));
-                weekRow.appendChild(dayCell);
+
+                weekRow.appendChild(createGridCell(dayModel));
             }
             monthTableElement.appendChild(weekRow);
         }
@@ -96,9 +88,38 @@
         // в формате ММ.ГГГГ
         currentMonthElement.innerHTML = (currentMonth < 10 ? '0' : '') + currentMonth + '.' + currentYear;
     }
-    
+
+    function createGridCell(dayModel) {
+        var dayCell = document.createElement('td');
+        dayCell.addEventListener("click", function(){
+            showAddEditForm(dayModel);
+            console.log(dayModel);
+
+        });
+        // добавьте обработчик события "click" элементу в переменной
+        // dayCell, используя метод addEventListener(eventType, handlerFunction)
+        // только для тех ячеек, для которых дата относится к выбранному месяцу;
+        // по клику необходимо вызвать функцию showAddEditForm, передавая ей
+        // значение переменной dayModel
+
+        // добавьте присвоение класса inactive, если дата не относится
+        // к выбранному месяцу
+        // используйте поле className элемента
+        if (dayModel.date.getMonth() + 1 != currentMonth) {
+            dayCell.className = 'inactive';
+        }
+        // добавьте присвоение класса booked ячейкам, для которых в переменной dayModel
+        // задано (т.е. не равно undefined) поле info
+        if (dayModel.info !== undefined) {
+            dayCell.className += ' booked';
+        }
+        // добавление текста с номером дня месяца в ячейку таблицы
+        dayCell.appendChild(document.createTextNode(dayModel.date.getDate().toString()));
+        return dayCell;
+    }
+
     // функция, обрабатывающая клик на кнопке "<<"
-    function prevMonth() {
+    function previousMonth() {
         var dateInPrevMonth = new Date(currentYear, currentMonth-1, 0);
         currentYear = dateInPrevMonth.getFullYear();
         currentMonth = dateInPrevMonth.getMonth()+1;
@@ -117,18 +138,21 @@
     function showAddEditForm(booking) {
         currentBooking = booking;
         var dateText = (booking.date.getDate()<10 ? '0' : '')
-            + booking.date.getDate()
+            + booking.date.getDate() + "."
             + (booking.date.getMonth()<9 ? '0' : '')
-            + (booking.date.getMonth()+1)
+            + (booking.date.getMonth()+1) + "."
             + booking.date.getFullYear();
+        document.getElementById('addEditBooking').style.display = "block";
         document.getElementById('bookingDateField').innerHTML = dateText;
         document.getElementById('bookingInfoField').value = booking.info ? booking.info : '';
     }
     
     // сохранение данных брони
     function saveBooking() {
-        
-        
+        var info = document.getElementsById('bookingInfoField').value,
+            date = currentBooking.date;
+        bookingsModel.addBooking(date,info);
+        console
         drawGrid();
     }
     
