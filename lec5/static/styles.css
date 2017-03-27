@@ -6,12 +6,6 @@ body {
 	width: 300px;
 }
 
-/*  для элемента #prevMonth задайте позиционирование в 0 пикселей
-    от левой границы элемента #month, для элемента #nextMonth - 
-    в 0 пикселей от правой границы элемента #month, для обоих
-    элементов - 0 пикселей от верхней границы элемента #month;
-    используйте свойства position, left и right */
-
 #prevMonth {
 	position: absolute;
 	left: 0px;
@@ -34,21 +28,20 @@ body {
     margin-right: 10px;
 }
 
-/* 
-    используя свойство float, сделайте, чтобы элементы #addEditBooking и 
-    #monthGridTable отображались один слева от другого
-*/
-
-
-#addEditBooking {
+#addEditBooking, #bookingSaveSuccess {
 	width: 500px;
 	float: left;
-	padding-left: 30px;
+	margin-left: 30px;
+	padding: 10px;
+	background-color: #eee;
+}
+
+#monthGrid {
+	float: left;
 }
 
 #monthGridTable {
 	width: 100%;
-	float: left;
 }
 #monthGridTable th, #monthGridTable td {
 	padding: 2px;
@@ -57,6 +50,7 @@ body {
 }
 #monthGridTable td:hover {
 	border: #ccc 1px solid;
+	cursor: pointer;
 }
 #monthGridTable td.inactive {
 	color: #ccc;

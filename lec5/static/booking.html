@@ -7,12 +7,13 @@
 </head>
 <body>
     <h1>Бронирование ресторана</h1>
-    <div id="month">
-        <div id="prevMonth" onclick="previousMonth()">&lt;&lt;</div>
-        <div id="currentMonth"></div>
-        <div id="nextMonth" onclick="nextMonth()">&gt;&gt;</div>
-    </div>
+    
     <div id="monthGrid">
+        <div id="month">
+            <div id="prevMonth" onclick="previousMonth()">&lt;&lt;</div>
+            <div id="currentMonth"></div>
+            <div id="nextMonth" onclick="nextMonth()">&gt;&gt;</div>
+        </div>
         <table id="monthGridTable">
             <tr id="monthGridHeader">
                 <th>Пн</th>
@@ -27,6 +28,7 @@
     </div>
     <div id="addEditBooking" style="display: none;">
         <div id="">Дата бронирования: <span id="bookingDateField"></span></div>
+        <br/>
         <label for="bookingInfoField">Информация о бронировании:</label><br>
         <textarea id="bookingInfoField"></textarea>
         <div id="bookingActions">
@@ -113,7 +115,6 @@
     // функция, обрабатывающая клик на кнопке "<<"
     function previousMonth() {
         var dateInPrevMonth = new Date(currentYear, currentMonth-1, 0);
-        console.log(currentMonth);
         currentYear = dateInPrevMonth.getFullYear();
         currentMonth = dateInPrevMonth.getMonth()+1;
         drawGrid();
@@ -124,21 +125,30 @@
         var dateInNextMonth = new Date(currentYear, currentMonth, 1);
         currentYear = dateInNextMonth.getFullYear();
         currentMonth = dateInNextMonth.getMonth()+1;
-        console.log(currentMonth);
         drawGrid();
+    }
+    
+    function getCurrentBookingDateText() {
+        return (currentBooking.date.getDate()<10 ? '0' : '')
+            + currentBooking.date.getDate() + '.'
+            + (currentBooking.date.getMonth()<9 ? '0' : '')
+            + (currentBooking.date.getMonth()+1) + '.'
+            + currentBooking.date.getFullYear()
     }
     
     // показ формы создания/редактирования брони
     function showAddEditForm(booking) {
         currentBooking = booking;
-        var dateText = (booking.date.getDate()<10 ? '0' : '')
-            + booking.date.getDate() + '.'
-            + (booking.date.getMonth()<9 ? '0' : '')
-            + (booking.date.getMonth()+1) + '.'
-            + booking.date.getFullYear();
+        var dateText = getCurrentBookingDateText();
         document.getElementById('addEditBooking').style.display = "block";
+        document.getElementById('bookingSaveSuccess').style.display = "none";
         document.getElementById('bookingDateField').innerHTML = dateText;
         document.getElementById('bookingInfoField').value = booking.info ? booking.info : '';
+    }
+    
+    // скрытие формы создания/редактирования брони
+    function hideAddEditForm() {
+        document.getElementById('addEditBooking').style.display = "none";
     }
     
     // сохранение данных брони
@@ -146,14 +156,17 @@
         var info = document.getElementById('bookingInfoField').value,
             date = currentBooking.date;
         bookingsModel.addBooking(date, info);
-        console.log(bookingsModel);
         drawGrid();
+        hideAddEditForm();
+        document.getElementById('savedBookingDate').innerHTML = getCurrentBookingDateText();
+        document.getElementById('bookingSaveSuccess').style.display = "block";
     }
     
     // удаление брони 
     function removeBooking() {
-        
+        bookingsModel.deleteBooking(currentBooking.date);
         drawGrid();
+        hideAddEditForm();
     }
     
     drawGrid();

@@ -19,8 +19,8 @@ Bookings.prototype.addBooking = function(date, info) {
 Bookings.prototype.findBookingForDate = function(date) {
     var booking;
     for (i=0;i<this.bookings.length;i++) {
-        if (iterationDate == this.bookings[i].date) {
-            booking = this.bookings[0];
+        if (date.getTime() == this.bookings[i].date.getTime()) {
+            booking = this.bookings[i];
         }
     }
     return booking;
@@ -30,7 +30,7 @@ Bookings.prototype.deleteBooking = function(date) {
     var bookingIndex,
         i = 0;
     while ( (bookingIndex === undefined) && (i < this.bookings.length) ) {
-        if (this.bookings[i].date == date) {
+        if (this.bookings[i].date.getTime() == date.getTime()) {
             bookingIndex = i;
         }
     }
@@ -69,14 +69,16 @@ Bookings.prototype.getMonthGrid = function(year, month) {
                             new Date(prevMonth == 12 ? year-1: year, 
                                      prevMonth-1, 
                                      daysInPrevMonth - prevMonthDaysInFirstWeek + 1);
-    while (iterationDate.getMonth() < month) {
+    while (
+        ((iterationDate.getMonth() < month) && (iterationDate.getFullYear() == year))
+        || (iterationDate.getFullYear<year)
+    ) {
         var currentWeek =[];
-        
         while (currentWeek.length<7) {
             var booking = this.findBookingForDate(iterationDate);
             if (!booking) {
                 booking = {date:iterationDate};
-            }
+            };
             currentWeek.push(booking);
             iterationDate = new Date(iterationDate.getFullYear(), 
                                      iterationDate.getMonth(), 
@@ -87,4 +89,3 @@ Bookings.prototype.getMonthGrid = function(year, month) {
     return weeksArr;
     
 }
-console.log((new Bookings()).getMonthGrid(2017,3));
