@@ -155,11 +155,13 @@
     function saveBooking() {
         var info = document.getElementById('bookingInfoField').value,
             date = currentBooking.date;
-        bookingsModel.addBooking(date, info);
-        drawGrid();
+        bookingsModel.addBooking(date, info, function () {
+            drawGrid();
+            document.getElementById('savedBookingDate').innerHTML = getCurrentBookingDateText();
+            document.getElementById('bookingSaveSuccess').style.display = "block";
+        });
+
         hideAddEditForm();
-        document.getElementById('savedBookingDate').innerHTML = getCurrentBookingDateText();
-        document.getElementById('bookingSaveSuccess').style.display = "block";
     }
     
     // удаление брони 

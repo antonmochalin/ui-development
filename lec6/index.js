@@ -21,7 +21,9 @@ app.post('/bookings', function(req, res){
     }
     booking.info = req.body.info;
     console.dir(bookings);
+    setTimeout(function () {
     res.end();
+    }, 5000)
 });
 app.get('/bookings', function(req, res) {
     var responseBookings = [],

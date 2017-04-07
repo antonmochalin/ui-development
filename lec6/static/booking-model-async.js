@@ -6,7 +6,13 @@ function Bookings() {
 //отправьте запрос POST /bookings с JSON с информацией
 //о брони и вызовите функцию, переданную в третьем аргументе (callback) 
 Bookings.prototype.addBooking = function(date, info, callback) {
-    
+    var xhr = new XMLHttpRequest(),
+        dateString = date.toISOString().substr(0,10),
+        url = "/bookings",
+        data = {date: dateString, info: info};
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.send(JSON.stringify(data));
 }
 
 //удалить запись бронирования на определенную дату
