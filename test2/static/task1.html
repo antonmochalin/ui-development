@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вторая контрольная</title>
+    <style type="text/css">
+    /* для полей ввода name и email установите ширину 300 пикселов,
+       границу толщиной в 1 пиксель с цветом #888 
+       и поле снизу в 10 пикселов     
+    */
+    
+    /* для заголовка <h1> установите размер шрифта 200 процентов */
+    
+    /* для кнопки "Отправить" установите внутренние отступы 
+       в 20 пикселов справа и слева и 5 пикселов сверху и снизу,
+       а также границу толщиной в 2 пикселя с цветом #888
+   */ 
+   
+   /* сделайте все элементы <input> блочными */
+   
+   /* выделите элемент с id emailErrorMessage красным шрифтом (#f00) */
+    </style>
+</head>
+<body>
+<h1>Регистрация</h1>
+<form name="regForm" action="/" method="POST">
+<label for="name">Фамилия, имя, отчество</label>
+<input type="text" id="name" name="name">
+<label for="email">Email</label>
+<input type="text" id="email" name="email" oninput="hideEmailErrorMessage()">
+<input type="submit" value="Отправить" id="submit">
+<div id="emailErrorMessage"
+     style="display:none">Неправильный email</div>
+</form>
+<script type="text/javascript">
+// переменная для хранения элемента с сообщением об ошибке
+var emailErrorMessage = document.getElementById("emailErrorMessage");
+
+// используя метод addEventListener, добавьте элементу <form>
+// обработчик события submit, в котором проверьте значение
+// поля ввода email, используя функцию checkEmail
+// если значение поля email невалидно, вызовите метод
+// preventDefault() объекта данного события, чтобы предотвратить
+// отправку формы, и сделайте видимым элемент с сообщением об ошибке
+// из переменной emailErrorMessage
+
+
+// реализуйте функцию hideEmailErrorMessage, скрывающую сообщение 
+// об ошибке по событию input на поле ввода email
+function hideEmailErrorMessage() {
+    
+}
+
+// функция проверки валидности email, принимает строку 
+// в качестве первого аргумента и возвращает true если 
+// строка является валидным email и false - если нет
+function checkEmail(email){
+    if (!email) return false;
+    return email.match(/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/) ? true : false;
+}
+</script>
+</body>
+</html>
