@@ -7,17 +7,30 @@
        границу толщиной в 1 пиксель с цветом #888 
        и поле снизу в 10 пикселов     
     */
-    
+    #name, #email {
+        width: 300px;
+        border: #888 1px solid;
+    }
     /* для заголовка <h1> установите размер шрифта 200 процентов */
-    
+    h1 {
+        font-size: 200%
+    }
     /* для кнопки "Отправить" установите внутренние отступы 
        в 20 пикселов справа и слева и 5 пикселов сверху и снизу,
        а также границу толщиной в 2 пикселя с цветом #888
-   */ 
-   
-   /* сделайте все элементы <input> блочными */
-   
-   /* выделите элемент с id emailErrorMessage красным шрифтом (#f00) */
+    */
+    #submit {
+        padding: 20px 5px;
+        border: #888 2px solid;
+    }
+    /* сделайте все элементы <input> блочными */
+    input {
+        display: block;
+    }
+    /* выделите элемент с id emailErrorMessage красным шрифтом (#f00) */
+    #emailErrorMessage {
+        color: #f00;
+    }
     </style>
 </head>
 <body>
@@ -42,12 +55,21 @@ var emailErrorMessage = document.getElementById("emailErrorMessage");
 // preventDefault() объекта данного события, чтобы предотвратить
 // отправку формы, и сделайте видимым элемент с сообщением об ошибке
 // из переменной emailErrorMessage
-
+document.getElementsByTagName("form")[0]
+    .addEventListener("submit", function(){
+    if (!checkEmail(document.getElementById("email").value)){
+        event.preventDefault();
+        emailErrorMessage.style.display = "block";
+    }
+    else {
+        hideEmailErrorMessage();
+    }
+});
 
 // реализуйте функцию hideEmailErrorMessage, скрывающую сообщение 
 // об ошибке по событию input на поле ввода email
 function hideEmailErrorMessage() {
-    
+    emailErrorMessage.style.display = "none";
 }
 
 // функция проверки валидности email, принимает строку 
