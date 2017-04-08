@@ -22,8 +22,8 @@ app.post('/bookings', function(req, res){
     booking.info = req.body.info;
     console.dir(bookings);
     setTimeout(function () {
-    res.end();
-    }, 5000)
+        res.end();
+    }, 10000)
 });
 app.get('/bookings', function(req, res) {
     var responseBookings = [],
@@ -38,8 +38,9 @@ app.get('/bookings', function(req, res) {
             });
         }
     }
-    
-    res.end(JSON.stringify(responseBookings));
+    setTimeout(function () {
+        res.end(JSON.stringify(responseBookings));
+    }, 10000)
 });
 app.delete('/bookings/:bookingDate', function(req, res){
     var date = new Date(Date.parse(req.params.bookingDate)),
@@ -53,7 +54,9 @@ app.delete('/bookings/:bookingDate', function(req, res){
         bookings.splice(indexToDelete, 1);
     }
     console.dir(bookings);
-    res.end();
+    setTimeout(function () {
+        res.end();
+    }, 10000)
 });
 
 app.listen(8080, function(){

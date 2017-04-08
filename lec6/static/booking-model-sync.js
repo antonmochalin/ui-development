@@ -3,19 +3,14 @@ function Bookings() {
 }
 
 //добавить/изменить бронирование на определенный день
-Bookings.prototype.addBooking = function(date, info, callback) {
+Bookings.prototype.addBooking = function(date, info) {
     var xhr = new XMLHttpRequest(),
         dateString = date.toISOString().substr(0,10),
         url = "/bookings",
         data = {date: dateString, info: info};
-    xhr.open("POST", url, true);
+    xhr.open("POST", url, false);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send(JSON.stringify(data));
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            callback();
-        }
-    }
 }
 
 //удалить запись бронирования на определенную дату
