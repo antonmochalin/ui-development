@@ -7,17 +7,22 @@
        границу толщиной в 1 пиксель с цветом #888 
        и поле снизу в 10 пикселов     
     */
-    
+    [type="text"] {width: 300px; border-width: 1px; border-color: #888; margin-bottom: 10px;}
+
     /* для заголовка <h1> установите размер шрифта 200 процентов */
-    
-    /* для кнопки "Отправить" установите внутренние отступы 
+    h1 {font-size: 200%;}
+    /* для кнопки "Отправить" установите внутренние отступы
        в 20 пикселов справа и слева и 5 пикселов сверху и снизу,
        а также границу толщиной в 2 пикселя с цветом #888
-   */ 
-   
+   */
+    #submit {border-width: 2px; border-color: #888; padding: 5px 20px;}
+
    /* сделайте все элементы <input> блочными */
-   
+   input {display: block}
+
    /* выделите элемент с id emailErrorMessage красным шрифтом (#f00) */
+    #emailErrorMessage {color: #f00;}
+
     </style>
 </head>
 <body>
@@ -35,6 +40,16 @@
 // переменная для хранения элемента с сообщением об ошибке
 var emailErrorMessage = document.getElementById("emailErrorMessage");
 
+// функция проверки валидности email, принимает строку
+// в качестве первого аргумента и возвращает true если
+// строка является валидным email и false - если нет
+function checkEmail(email){
+//    alert(email);
+    if (email) {
+    } else return false;
+    return email.match(/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/) ? true : false;
+}
+
 // используя метод addEventListener, добавьте элементу <form>
 // обработчик события submit, в котором проверьте значение
 // поля ввода email, используя функцию checkEmail
@@ -42,21 +57,25 @@ var emailErrorMessage = document.getElementById("emailErrorMessage");
 // preventDefault() объекта данного события, чтобы предотвратить
 // отправку формы, и сделайте видимым элемент с сообщением об ошибке
 // из переменной emailErrorMessage
+document.getElementsByTagName("form").item(0).addEventListener("submit", function (event) {
+//    if (!checkEmail(document.getElementById('email').getAttribute("value").toString())) {
+        if (!checkEmail(event.target.email.value))      //2 часа медитации, что бы понять, что так (getAttribute("value")) нельзя...
+        {
 
+            //emailErrorMessage.setAttribute("display", "block");     //а почему так не сработало?
+        emailErrorMessage.style.display = "block";
+        event.preventDefault();
+    }
+
+});
 
 // реализуйте функцию hideEmailErrorMessage, скрывающую сообщение 
 // об ошибке по событию input на поле ввода email
 function hideEmailErrorMessage() {
-    
+    emailErrorMessage.style.display = "none";
 }
 
-// функция проверки валидности email, принимает строку 
-// в качестве первого аргумента и возвращает true если 
-// строка является валидным email и false - если нет
-function checkEmail(email){
-    if (!email) return false;
-    return email.match(/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/) ? true : false;
-}
+
 </script>
 </body>
 </html>
