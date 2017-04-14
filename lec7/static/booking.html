@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html ng-app="bookings">
+<head>
+    <title>Бронирование ресторана</title>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="booking-model.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="bookingsController">
+    <h1>Бронирование ресторана</h1>
+    
+    <div id="monthGrid">
+        <div id="month">
+            <div id="prevMonth" ng-click="previousMonth()">&lt;&lt;</div>
+            <div id="currentMonth">
+            <span ng-bind="currentMonth"></span>/<span ng-bind="currentYear">
+            </div>
+            <div id="nextMonth" ng-click="nextMonth()">&gt;&gt;</div>
+        </div>
+        <table id="monthGridTable">
+            <tr id="monthGridHeader">
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Вс</th>
+            </tr>
+            <tr ng-repeat="week in weeksGrid">
+                <td ng-repeat="day in week" 
+                    ng-bind="day.date.getDate()"
+                    ng-class="{
+                                inactive: day.date.getMonth()!=currentMonth-1, 
+                                booked: day.info!==undefined
+                               }"
+                    ng-click="showAddEditForm(day)">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="addEditBooking" 
+         ng-if="selectedDay">
+        <div>Дата бронирования: <span ng-bind="formatDate(selectedDay.date)"></span></div>
+        <br/>
+        <label for="bookingInfoField">Информация о бронировании:</label><br>
+        <textarea id="bookingInfoField" ng-model="selectedDay.info"></textarea>
+        <div id="bookingActions">
+            <input type="button" 
+                   id="removeBookingButton" 
+                   ng-click="removeBooking()"
+                   value="Удалить">
+            <input type="button" 
+                   id="saveBookingButton" 
+                   ng-click="saveBooking()"
+                   value="Сохранить">
+        </div>
+    </div>
+    <div id="bookingSaveSuccess" ng-if="saved">
+        Бронирование на <span id="savedBookingDate"></span> сохранено.
+    </div>
+    
+    <script type="text/javascript">
+        angular.module('bookings',[])
+            .controller('bookingsController', BookingsController);
+        function BookingsController($scope) {
+            var today = new Date(),
+                currentMonth = today.getMonth()+1,
+                currentYear = today.getFullYear(),
+                bookingsModel = new Bookings();
+            $scope.previousMonth = previousMonth;
+            $scope.nextMonth = nextMonth;
+            $scope.showAddEditForm = showAddEditForm;
+            $scope.saveBooking = saveBooking;
+            $scope.removeBooking = removeBooking;
+            $scope.formatDate = formatDate;
+            
+            showMonth();
+            
+            function showMonth() {
+                $scope.currentMonth = currentMonth;
+                $scope.currentYear = currentYear;
+                $scope.weeksGrid = bookingsModel.getMonthGrid(currentYear, currentMonth);
+            }
+            // функция, обрабатывающая клик на кнопке "<<"
+            function previousMonth() {
+                var dateInPrevMonth = new Date(currentYear, currentMonth-1, 0);
+                currentYear = dateInPrevMonth.getFullYear();
+                currentMonth = dateInPrevMonth.getMonth()+1;
+                showMonth();
+            }
+            
+            // функция, обрабатывающая клик на кнопке ">>"
+            function nextMonth() {
+                var dateInNextMonth = new Date(currentYear, currentMonth, 1);
+                currentYear = dateInNextMonth.getFullYear();
+                currentMonth = dateInNextMonth.getMonth()+1;
+                showMonth();
+            }
+            
+            // функция, показывающая форму создания/изменения брони
+            function showAddEditForm(day) {
+                $scope.selectedDay = angular.copy(day);
+                $scope.saved = false;
+            }
+            
+            // функция, обрабатывающая сохранение брони
+            function saveBooking() {
+                bookingsModel.addBooking($scope.selectedDay.date, $scope.selectedDay.info);
+                $scope.selectedDay = null;
+                showMonth();
+            }
+            
+            // функция, обрабатывающая удаление брони
+            function removeBooking() {
+                bookingsModel.deleteBooking($scope.selectedDay.date);
+                $scope.selectedDay = null;
+                showMonth();
+            }
+            
+            // форматирование даты
+            function formatDate(date) {
+                return (date.getDate()<10 ? '0' : '')
+                    + date.getDate() + '.'
+                    + (date.getMonth()<9 ? '0' : '')
+                    + (date.getMonth()+1) + '.'
+                    + date.getFullYear();
+            }
+        }
+//     var today = new Date(),
+//         currentMonth = today.getMonth()+1,
+//         currentYear = today.getFullYear(),
+//         bookingsModel = new Bookings(),
+//         currentMonthElement = document.getElementById('currentMonth'),
+//         monthTableElement = document.getElementById('monthGridTable'),
+//         currentBooking;
+    
+//     // функция, добавляющая в таблицу #monthGridTable строки
+//     // для построения сетки для указанного месяца
+//     function drawGrid() {
+//         var gridModel = bookingsModel.getMonthGrid(currentYear, currentMonth),
+//             i,j;
+//         // добавьте удаление ранее добавленных строк для недель
+//         // используя итерацию по массиву childNodes таблицы
+//         // #monthGridTable и метод removeChild, удаляя все элементы
+//         // с тэгом tr, начиная со второго
+//         var childRows = monthTableElement.getElementsByTagName('tr'),
+//             headerRow = childRows[0].innerHTML;
+
+//         monthTableElement.innerHTML = '<tr>' + headerRow + '</tr>';
+
+
+//         // добавление строк - итерация по массиву gridModel и затем
+//         // по каждому из массивов - элементов gridModel
+//         for (i = 0; i < gridModel.length; i++) {
+//             var weekModel = gridModel[i],
+//                 // создание строки таблицы
+//                 weekRow = document.createElement('tr');
+//             for (j = 0; j < weekModel.length; j++) {
+//                 var dayModel = weekModel[j];
+
+//                 weekRow.appendChild(createGridCell(dayModel));
+//             }
+//             monthTableElement.appendChild(weekRow);
+//         }
+//         // замена текста элемента currentMonth на выбранный месяц
+//         // в формате ММ.ГГГГ
+//         currentMonthElement.innerHTML = (currentMonth < 10 ? '0' : '') + currentMonth + '.' + currentYear;
+//     }
+//     function createGridCell(dayModel) {
+//         // создание ячейки таблицы
+//         var dayCell = document.createElement('td');
+//         // добавьте обработчик события "click" элементу в переменной
+//         // dayCell, используя метод addEventListener(eventType, handlerFunction)
+//         // только для тех ячеек, для которых дата относится к выбранному месяцу;
+//         // по клику необходимо вызвать функцию showAddEditForm, передавая ей
+//         // значение переменной dayModel
+//         dayCell.addEventListener('click', function(){
+//             showAddEditForm(dayModel);
+//         });
+
+//         // добавьте присвоение класса inactive, если дата не относится
+//         // к выбранному месяцу
+//         // используйте поле className элемента
+//         if (dayModel.date.getMonth()+1!=currentMonth) dayCell.className = 'inactive';
+
+//         // добавьте присвоение класса booked ячейкам, для которых в переменной dayModel
+//         // задано (т.е. не равно undefined) поле info
+//         if (dayModel.info!==undefined) dayCell.className += " booked";
+
+//         // добавление текста с номером дня месяца в ячейку таблицы
+//         dayCell.appendChild(document.createTextNode(dayModel.date.getDate().toString()));
+//         return dayCell;
+//     }
+//     // функция, обрабатывающая клик на кнопке "<<"
+//     function previousMonth() {
+//         var dateInPrevMonth = new Date(currentYear, currentMonth-1, 0);
+//         currentYear = dateInPrevMonth.getFullYear();
+//         currentMonth = dateInPrevMonth.getMonth()+1;
+//         drawGrid();
+//     }
+    
+//     // функция, обрабатывающая клик на кнопке ">>"
+//     function nextMonth() {
+//         var dateInNextMonth = new Date(currentYear, currentMonth, 1);
+//         currentYear = dateInNextMonth.getFullYear();
+//         currentMonth = dateInNextMonth.getMonth()+1;
+//         drawGrid();
+//     }
+    
+//     function getCurrentBookingDateText() {
+//         return (currentBooking.date.getDate()<10 ? '0' : '')
+//             + currentBooking.date.getDate() + '.'
+//             + (currentBooking.date.getMonth()<9 ? '0' : '')
+//             + (currentBooking.date.getMonth()+1) + '.'
+//             + currentBooking.date.getFullYear()
+//     }
+    
+//     // показ формы создания/редактирования брони
+//     function showAddEditForm(booking) {
+//         currentBooking = booking;
+//         var dateText = getCurrentBookingDateText();
+//         document.getElementById('addEditBooking').style.display = "block";
+//         document.getElementById('bookingSaveSuccess').style.display = "none";
+//         document.getElementById('bookingDateField').innerHTML = dateText;
+//         document.getElementById('bookingInfoField').value = booking.info ? booking.info : '';
+//     }
+    
+//     // скрытие формы создания/редактирования брони
+//     function hideAddEditForm() {
+//         document.getElementById('addEditBooking').style.display = "none";
+//     }
+    
+//     // сохранение данных брони
+//     function saveBooking() {
+//         var info = document.getElementById('bookingInfoField').value,
+//             date = currentBooking.date;
+//         bookingsModel.addBooking(date, info);
+//         drawGrid();
+//         hideAddEditForm();
+//         document.getElementById('savedBookingDate').innerHTML = getCurrentBookingDateText();
+//         document.getElementById('bookingSaveSuccess').style.display = "block";
+//     }
+    
+//     // удаление брони 
+//     function removeBooking() {
+//         bookingsModel.deleteBooking(currentBooking.date);
+//         drawGrid();
+//         hideAddEditForm();
+//     }
+    
+//     drawGrid();
+    </script>
+    
+</body>
+</html>
