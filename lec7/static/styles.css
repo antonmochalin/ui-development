@@ -1,0 +1,65 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#month, #monthGrid {
+	width: 300px;
+}
+
+#prevMonth {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#nextMonth {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+#month {
+	font-weight: bold;
+	position: relative;
+}
+
+#currentMonth {
+    text-align: center;
+    margin-right: 10px;
+}
+
+#addEditBooking, #bookingSaveSuccess {
+	width: 500px;
+	float: left;
+	margin-left: 30px;
+	padding: 10px;
+	background-color: #eee;
+}
+
+#monthGrid {
+	float: left;
+}
+
+#monthGridTable {
+	width: 100%;
+}
+#monthGridTable th, #monthGridTable td {
+	padding: 2px;
+	text-align: right;
+	border: #fff 1px solid;
+}
+#monthGridTable td:hover {
+	border: #ccc 1px solid;
+	cursor: pointer;
+}
+#monthGridTable td.inactive {
+	color: #ccc;
+}
+#monthGridTable td.booked {
+    background-color: #fdb;
+}
+
+#bookingInfoField {
+	width: 400px;
+	height: 200px;
+}

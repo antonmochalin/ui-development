@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="purchases">
+<head>
+    <title>Список покупок</title>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="purchasesController">
+    <h1>Список покупок</h1>
+    <!-- Используйте директиву ng-repeat, чтобы отобразить все элементы списка purchases.items 
+         Пусть отдельный элемент списка будет присваиваться переменной item -->
+    <div>
+        <!-- Используйте директиву ng-bind, чтобы отобразить сумму покупки (поле item.price) -->
+        <span>100</span>
+        <!-- Используйте директиву ng-click, чтобы добавить обработку клика на ссылке, используя
+             метод purchases.remove -->
+        <a href="">Удалить</a>
+    </div>
+    <!-- Используйте директиву ng-bind, чтобы отобразить общую сумму покупок, используя метод
+         purchases.getTotal -->
+    <div>Итого: <span>100</span></div>
+    <br><br>
+    <div>
+    Новая покупка:<br>
+    <input type="text" ng-model="newItem.price">
+    <!-- Используйте директиву ng-click, чтобы добавить обработку клика на кнопке, используя метод
+         addNew -->
+    <input type="button" value="Добавить">
+    </div>
+    
+    <script type="text/javascript">
+    angular.module('purchases', []).controller('purchasesController', function($scope){
+        $scope.newItem = {};
+        
+        // добавьте в переменную $scope поле purchases со значением из переменной purchasesModel
+        
+    });
+    
+    var purchasesModel = {
+        items: [],
+        addNew: function(price){
+            var itemPrice = parseFloat(price);
+            if (!itemPrice) {return;}
+            this.items.push({price: itemPrice});
+        },
+        remove: function(itemToRemove){
+            var indexToRemove = -1;
+            angular.forEach(this.items, function(item, index){
+                if (item == itemToRemove) {
+                    indexToRemove = index;
+                }
+            });
+            if (indexToRemove >=0 ) {
+                this.items.splice(indexToRemove, 1);
+            }
+        },
+        getTotal: function(){
+            var total = 0;
+            angular.forEach(this.items, function(item){
+                total += item.price;
+            });
+            return total;
+        }
+    };
+    </script>
+</body>
+</html>
