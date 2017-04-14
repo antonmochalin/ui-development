@@ -13,15 +13,20 @@ body {
     используйте свойства position, left и right */
 
 #prevMonth {
-	
+	position: absolute;
+	left: 0px;
+	top: 0px;
 }
 
 #nextMonth {
-	
+	position: absolute;
+	right: 0px;
+	top: 0px;
 }
 
 #month {
 	font-weight: bold;
+	position: relative;
 }
 
 #currentMonth {
@@ -37,10 +42,13 @@ body {
 
 #addEditBooking {
 	width: 500px;
+	float: left;
+	padding-left: 30px;
 }
 
 #monthGridTable {
 	width: 100%;
+	float: left;
 }
 #monthGridTable th, #monthGridTable td {
 	padding: 2px;

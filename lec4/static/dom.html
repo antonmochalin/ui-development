@@ -15,61 +15,70 @@
         <input type="submit" value="Отправить">
     </form>
     <script type="text/javascript">
+
     // метод console.log в браузерном Javascript позволяет выводить в консоль разработчика
     // значение любых переменных (как строки и числа, так и объекты, массивы и функции)
-    var a = 1,
-        b = 'строка',
-        c = {
-            field:'строка как поле объекта', 
-            'some array': [1,2,'строка как элемент массива',{name:'some name'}],
-            method: function(str){
-                return '"' + str + '" - первый аргумент метода method';
-            }
-        };
-    console.log(c);
-    console.log(a, b, c.field);
-    console.log(c['some array']);
-    console.log(c.method);
-    console.log(c.method('аргумент-строка'));
-    var d = c['some array'];
-    console.log(d[3]);
+    <!--var a = 1,-->
+        <!--b = 'строка',-->
+        <!--c = {-->
+            <!--field:'строка как поле объекта', -->
+            <!--'some array': [1,2,'строка как элемент массива',{name:'some name'}],-->
+            <!--method: function(str){-->
+                <!--return '"' + str + '" - первый аргумент метода method';-->
+            <!--}-->
+        <!--};-->
+    <!--console.log(c);-->
+    <!--console.log(a, b, c.field);-->
+    <!--console.log(c['some array']);-->
+    <!--console.log(c.method);-->
+    <!--console.log(c.method('аргумент-строка'));-->
+    <!--var d = c['some array'];-->
+    <!--console.log(d[3]);-->
     // у массивов Javascript есть встроенное свойство length, хранящее длину массива
-    console.log(d.length);
+    //console.log(d.length);
     // можно выводить в консоль и HTML-элементы
     console.log(document.createElement('div'));
     
     // выведите в консоль элемент <form>, используя метод getElementById объекта document
-    
+    console.log( document.getElementById('sendMessage'));
     // выведите в консоль массив всех элементов с тэгом <input> в документе,
     // используя метод getElementsByTagName объекта document
-    
+    console.log( document.getElementsByTagName('input'));
     // присвойте переменной brElement значение - новый HTML-элемент с тэгом <br>
-    
+    var brElement = document.createElement('br');
     // присвойте переменной textNode значение - текстовый узел DOM с текстом:
     // Нажмите "Отправить" для отправки сообщения
-    
+    var textNode = document.createTextNode('Нажмите "Отправить" для отправки сообщения');
     // добавьте в элемент <form> два узла в конце - элемент <br> из переменной brElement
     // и текстовый элемент из переменной textNode, используя метод appendChild элемента <form>
-    
+    document.getElementById('sendMessage').appendChild(brElement);
+    document.getElementById('sendMessage').appendChild(textNode);
     // присвойте переменной labelElement значение - первый элемент с тэгом <label> в документе
-    
+    var labelElement = document.getElementsByTagName('label')[0];
     // присвойте переменной inputElement значение - первый элемент с тэгом <input> в документе
-    
+    var inputElement = document.getElementsByTagName('input')[0];
     // удалите из элемента <form> элементы, хранящиеся в переменных labelElement и inputElement,
     // используя метод removeChild элемента <form>
-    
+        console.log(labelElement);
+    document.getElementById('sendMessage').removeChild(labelElement)
+    console.log('asdas');
+    console.log(labelElement);
+    document.getElementById('sendMessage').removeChild(inputElement)
     // измените значение атрибута cols элемента <textarea> на 120, используя метод setAttribute
-    
+    document.getElementsByTagName('textarea')[0].setAttribute('cols', '120');
     // самая часто используемая форма цикла в Javascript начинается с трех выражений - инициализации
     // счетчика итераций, проверку условия и приращения счетчика итераций - в круглых скобках
     // и последующего тела цикла в фигурных скобках
     // выводим стилевое значение fontWeight для всех элементов с тэгом <label> в консоль:
+//    var labels = document.getElementsByTagName('label');
+//    for (var i=0;i<labels.length;i++) {
+//        console.log(labels[i].style.fontWeight);
+//    }
+    // присвойте в цикле для всех элементов c тэгом label значение "bold" стилевому свойству fontWeight
     var labels = document.getElementsByTagName('label');
     for (var i=0;i<labels.length;i++) {
-        console.log(labels[i].style.fontWeight);
+        labels[i].style.fontWeight = 'bold';
     }
-    // присвойте в цикле для всех элементов c тэгом label значение "bold" стилевому свойству fontWeight
-    
     </script>
 </body>
 </html>

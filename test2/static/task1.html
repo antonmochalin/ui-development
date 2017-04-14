@@ -7,17 +7,33 @@
        границу толщиной в 1 пиксель с цветом #888 
        и поле снизу в 10 пикселов     
     */
-    
+    #name, #email {
+        width: 300px;
+        border: #888 1px solid;
+        margin-bottom: 10px;
+    }
+
     /* для заголовка <h1> установите размер шрифта 200 процентов */
-    
+    h1 {
+        font-size: 200%;
+    }
     /* для кнопки "Отправить" установите внутренние отступы 
        в 20 пикселов справа и слева и 5 пикселов сверху и снизу,
        а также границу толщиной в 2 пикселя с цветом #888
    */ 
-   
+   #submit {
+       margin: 5px 20px;
+       border: 2px #888 solid;
+   }
    /* сделайте все элементы <input> блочными */
-   
+   input {
+        display: block;
+   }
+
    /* выделите элемент с id emailErrorMessage красным шрифтом (#f00) */
+   #emailErrorMessage {
+       background-color: #f00;
+   }
     </style>
 </head>
 <body>
@@ -43,11 +59,18 @@ var emailErrorMessage = document.getElementById("emailErrorMessage");
 // отправку формы, и сделайте видимым элемент с сообщением об ошибке
 // из переменной emailErrorMessage
 
+document.getElementsByName("regForm")[0].addEventListener("submit", function(){
+    var email = document.getElementById("email").value;
+    if (!checkEmail(email)){
+        event.preventDefault();
+        emailErrorMessage.style.display = "block";
+    }
+});
 
 // реализуйте функцию hideEmailErrorMessage, скрывающую сообщение 
 // об ошибке по событию input на поле ввода email
 function hideEmailErrorMessage() {
-    
+    emailErrorMessage.style.display = "none";
 }
 
 // функция проверки валидности email, принимает строку 
