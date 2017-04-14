@@ -13,13 +13,27 @@ Bookings.prototype.addBooking = function(date, info, callback) {
     xhr.open("POST", url, true);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send(JSON.stringify(data));
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            callback();
+        }
+    }
 }
 
 //удалить запись бронирования на определенную дату
 //отправьте запрос DELETE /bookings/YYYY-MM-DD
 //и вызовите функцию, переданную в третьем аргументе (callback)
 Bookings.prototype.deleteBooking = function(date, callback) {
-    
+    var xhr = new XMLHttpRequest(),
+        dateString = date.toISOString().substr(0,10),
+        url = "/bookings/" + dateString;
+    xhr.open("DELETE", url, true);
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            callback();
+        }
+    }
 }
 // получить сетку "бронирования на месяц"
 // первый аргумент - год (целое число)
@@ -72,7 +86,22 @@ Bookings.prototype.getMonthGrid = function(year, month, callback) {
         lastDayString = weeksArr[weeksArr.length-1][6].date.toISOString().substr(0, 10),
         url = "bookings?from=" + firstDayString + "&to=" + lastDayString,
         xhr = new XMLHttpRequest();
-    
-    
-    
+    xhr.open("GET", url, true);
+    xhr.send();
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            var bookingsArr = JSON.parse(xhr.responseText),
+                i;
+            for (i = 0; i<bookingsArr.length; i++) {
+                var booking = bookingsArr[i],
+                    bookingCell = dateStrToBooking[booking.date];
+                if (bookingCell) {
+                    bookingCell.info = booking.info;
+                }
+            }
+            callback(weeksArr);
+        }
+    }
+
 }
