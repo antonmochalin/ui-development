@@ -9,23 +9,23 @@
     <h1>Список покупок</h1>
     <!-- Используйте директиву ng-repeat, чтобы отобразить все элементы списка purchases.items 
          Пусть отдельный элемент списка будет присваиваться переменной item -->
-    <div>
+    <div ng-repeat="item in purchases.items">
         <!-- Используйте директиву ng-bind, чтобы отобразить сумму покупки (поле item.price) -->
-        <span>100</span>
+        <span ng-bind = "item.price"></span>
         <!-- Используйте директиву ng-click, чтобы добавить обработку клика на ссылке, используя
              метод purchases.remove -->
-        <a href="">Удалить</a>
+        <a href="" ng-click="purchases.remove(item)">Удалить</a>
     </div>
     <!-- Используйте директиву ng-bind, чтобы отобразить общую сумму покупок, используя метод
          purchases.getTotal -->
-    <div>Итого: <span>100</span></div>
+    <div>Итого: <span ng-bind="purchases.getTotal()"></span></div>
     <br><br>
     <div>
     Новая покупка:<br>
     <input type="text" ng-model="newItem.price">
     <!-- Используйте директиву ng-click, чтобы добавить обработку клика на кнопке, используя метод
          addNew -->
-    <input type="button" value="Добавить">
+    <input type="button" value="Добавить" ng-click="purchases.addNew(newItem.price); newItem={}">
     </div>
     
     <script type="text/javascript">
@@ -33,7 +33,7 @@
         $scope.newItem = {};
         
         // добавьте в переменную $scope поле purchases со значением из переменной purchasesModel
-        
+        $scope.purchases = purchasesModel;
     });
     
     var purchasesModel = {
