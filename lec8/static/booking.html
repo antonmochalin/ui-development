@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="bookings">
+<head>
+    <title>Бронирование ресторана</title>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="bookingService.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Бронирование ресторана</h1>
+    
+    <div ng-view></div>
+    
+    <script type="text/javascript">
+        angular.module('bookings',['ngRoute', 'booking-service'])
+        .config(function($routeProvider){
+            $routeProvider.when('/',{
+                templateUrl: '/bookings-selection.html',
+                controller: 'bookingsController'
+            }).when('/bookings/:bookingDate/amenities',{
+                templateUrl: '/amenities-selection.html',
+                controller: 'amenitiesSelectionController'
+            }).when('/bookings/:bookingDate/fnb',{
+                templateUrl: '/fnb-selection.html',
+                controller: 'fnbSelectionController'
+            }).otherwise('/');
+        });
+            
+            
+    </script>
+    <script type="text/javascript" src="bookingsController.js"></script>
+    <script type="text/javascript" src="amenitiesSelectionController.js"></script>
+    <script type="text/javascript" src="fnbSelectionController.js"></script>
+</body>
+</html>
