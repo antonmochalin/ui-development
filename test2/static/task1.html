@@ -63,6 +63,8 @@ document.getElementsByTagName("form").item(0).addEventListener("submit", functio
         {
 
             //emailErrorMessage.setAttribute("display", "block");     //а почему так не сработало?
+            // потому что display - это не атрибут, а стилевое свойство; через setAttribute можно было бы сделать разве что так:
+            // emailErrorMessage.setAttribute("style", "display:block");
         emailErrorMessage.style.display = "block";
         event.preventDefault();
     }
