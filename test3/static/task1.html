@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="test3app">
+<head>
+    <title>Третья контрольная</title>
+    <style type="text/css">
+        input {display: block; margin-bottom: 10px;}
+    </style>
+    <script type="text/javascript" src="angular/angular.js"></script>
+</head>
+<body ng-controller="mainCtrl">
+<h1>Регистрация</h1>
+<form name="regForm" ng-if="!registered">
+<label for="name">Фамилия, имя, отчество</label>
+<input type="text" ng-model="name">
+<label for="email">Email</label>
+<input type="text" ng-change="incorrectEmail=false" ng-model="email">
+<input type="submit" value="Отправить" ng-click="submit()">
+<div ng-show="incorrectEmail">Неправильный email</div>
+</form>
+<div ng-if="registered">Регистрация выполнена успешно</div>
+<script type="text/javascript">
+angular.module('test3app',[])
+.controller('mainCtrl', function($scope, $http){
+    // реализуйте метод submit в объекте $scope, который при  нажатии 
+    // кнопки "Отправить" проверит введенный email с помощью функции
+    // checkEmail 
+    // - если она вернет false, необходимо показать сообщение 
+    // "Неправильный email", 
+    // - если она вернет true, необходимо, используя сервис $http,
+    // отправить POST-запрос с ФИО и email на URL '/' и при получении
+    // ответа скрыть форму и показать сообщение "Регистрация выполнена успешно"
+    $scope.submit = function() {
+        
+    };
+});
+
+
+function checkEmail(email){
+    if (!email) return false;
+    return email.match(/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/) ? true : false;
+}
+</script>
+</body>
+</html>

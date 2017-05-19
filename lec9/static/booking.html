@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="bookings">
+<head>
+    <title>Бронирование ресторана</title>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="bookingService.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Бронирование ресторана</h1>
+    
+    <div ng-controller="navController" class="nav">
+        <div class="nav-item">
+            <a href="#/">Все бронирования</a>
+        </div>
+        <div class="nav-item"
+             click-outside="lastBookingsMenuVisible = false"
+             is-active="lastBookingsMenuVisible">
+            <a href 
+               ng-click="lastBookingsMenuVisible = !lastBookingsMenuVisible">Последние</a>
+            <div class="nav-menu" 
+                 ng-show="lastBookingsMenuVisible">
+                <div ng-repeat="bookingDate in lastBookings.slice(0,20)">
+                    <a href="#!/bookings/{{bookingDate.date}}/bookingDetails" 
+                       ng-bind="bookingDate.dateFormatted"
+                       ng-click="lastBookingsMenuVisible = false"></a>
+                </div>
+                <div ng-if="!lastBookings.length">Нет последних бронирований</div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div ng-view></div>
+    
+    <script type="text/javascript">
+        angular.module('bookings',['ngRoute', 'booking-service', 'ui.bootstrap'])
+        .config(function($routeProvider){
+            $routeProvider.when('/',{
+                template: '<bookings-selection></bookings-selection>'
+            }).when('/bookings/:bookingDate/bookingDetails',{
+                template: '<booking-details></booking-details>'
+            }).otherwise('/');
+        });
+            
+            
+    </script>
+    <script type="text/javascript" src="bookingsSelection.js"></script>
+    <script type="text/javascript" src="bookingDetails.js"></script>
+    <script type="text/javascript" src="navController.js"></script>
+    <script type="text/javascript" src="clickOutside.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<h2>Добавление дополнительных услуг</h2>
+<b>Дата бронирования: </b><span ng-bind="formatDate(booking.date)"></span><br/>
+<b>Информация о бронировании</b><br/><div ng-bind="booking.info"></div><br/>
+
+<uib-tabset>
+<uib-tab heading="Услуги">
+    <div class="left-pane">
+        <h3>Доступные услуги</h3>
+        <div ng-repeat="item in availableAmenities" ng-click="select(item)">
+            <div ng-bind="item.name"></div>
+            Цена: <span ng-bind="item.price"></span>
+        </div>
+    </div>
+    <div class="right-pane">
+        <h3>Добавленные услуги</h3>
+        <div ng-repeat="item in selectedAmenities">
+            <div ng-bind="item.name"></div>
+            <div>Цена: <span ng-bind="item.price"></span></div>
+            <div>
+                Комментарии: <br>
+                <textarea ng-model="item.comments"></textarea>
+            </div>
+            <div>
+                <input type="button" value="Сохранить" ng-click="save(item)">
+            </div>
+        </div>
+    </div>
+</uib-tab>
+<uib-tab heading="Меню">
+    <div class="left-pane">
+        <h3>Доступные блюда и напитки</h3>
+        <div ng-repeat="item in availableFnbs" ng-click="selectFnb(item)">
+            <div ng-bind="item.name"></div>
+            Цена: <span ng-bind="item.price"></span>
+        </div>
+    </div>
+    <div class="right-pane">
+        <h3>Добавленные блюда и напитки</h3>
+        <div ng-repeat="item in selectedFnbs">
+            <div ng-bind="item.name"></div>
+            <div>Цена: <span ng-bind="item.price"></span></div>
+            <div>
+                Количество: 
+                <input ng-model="item.quantity">
+            </div>
+            <br>
+            <div>
+                <input type="button" value="Сохранить" ng-click="saveFnb(item)">
+            </div>
+        </div>
+    </div>
+</uib-tab>
+</uib-tabset>

@@ -1,0 +1,119 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 20px;
+}
+.nav{
+	margin-bottom: 20px;
+} 
+.nav-item {
+	float: left;
+	margin-right: 20px;
+	position: relative;
+}
+.nav-menu {
+	position: absolute;
+	border: #aaa 1px solid;
+	background-color: #fff;
+	padding: 5px;
+	z-index: 1000;
+}
+#month, #monthGrid {
+	width: 300px;
+}
+
+#prevMonth {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	cursor: pointer;
+}
+
+#nextMonth {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	cursor: pointer;
+}
+
+#month {
+	font-weight: bold;
+	position: relative;
+}
+
+#currentMonth {
+    text-align: center;
+    margin-right: 10px;
+}
+
+#addEditBooking, #bookingSaveSuccess {
+	width: 500px;
+	float: left;
+	margin-left: 30px;
+	padding: 10px;
+	background-color: #eee;
+}
+
+#monthGrid {
+	float: left;
+}
+
+#monthGridTable {
+	width: 100%;
+}
+#monthGridTable th, #monthGridTable td {
+	padding: 2px;
+	text-align: right;
+	border: #fff 1px solid;
+}
+#monthGridTable td:hover {
+	border: #ccc 1px solid;
+	cursor: pointer;
+}
+#monthGridTable td.inactive {
+	color: #ccc;
+}
+#monthGridTable td.booked {
+    background-color: #fdb;
+}
+
+#bookingInfoField {
+	width: 400px;
+	height: 200px;
+}
+.right-pane, .left-pane {
+	float: left;
+	width: 400px;
+	margin-right: 30px;
+}
+.left-pane > div {
+	margin-bottom: 15px;
+	padding: 15px;
+	background: #eee;
+	border: #eee 2px solid;
+	cursor: pointer;
+}
+.left-pane > div:hover {
+	border: #ddd 2px solid;
+}
+.right-pane > div {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #efefef;
+    border: #efefef 2px solid;
+}
+.right-pane textarea {
+	width: 100%;
+}
+
+// директива tooltip
+.with-tooltip {
+	position:relative;
+}
+.tooltip {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+	padding: 5px;
+	border: #aaa 1px solid;
+	background-color: #fff;
+}
