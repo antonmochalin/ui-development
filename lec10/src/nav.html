@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Бронирование ресторана</h1>
+    <div ng-controller="navController" class="nav">
+        <div class="nav-item">
+            <a href="#/">Все бронирования</a>
+        </div>
+        <div class="nav-item"
+             click-outside="lastBookingsMenuVisible = false"
+             is-active="lastBookingsMenuVisible">
+            <a href 
+               ng-click="lastBookingsMenuVisible = !lastBookingsMenuVisible">Последние</a>
+            <div class="nav-menu" 
+                 ng-show="lastBookingsMenuVisible">
+                <div ng-repeat="bookingDate in lastBookings.slice(0,20)">
+                    <a href="#!/bookings/{{bookingDate.date}}/bookingDetails" 
+                       ng-bind="bookingDate.dateFormatted"
+                       ng-click="lastBookingsMenuVisible = false"></a>
+                </div>
+                <div ng-if="!lastBookings.length">Нет последних бронирований</div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+</div>

@@ -1,0 +1,27 @@
+{
+  "name": "lec10",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-route": "^1.6.4",
+    "angular-ui-bootstrap": "^2.0.0",
+    "body-parser": "^1.17.1",
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.28.2",
+    "express": "^4.15.2",
+    "html-loader": "^0.4.5",
+    "less": "^2.7.2",
+    "mongoose": "^4.9.5",
+    "q": "^1.5.0",
+    "style-loader": "^0.18.1",
+    "webpack": "^2.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build-watch": "webpack --watch"
+  },
+  "author": "",
+  "license": "ISC"
+}

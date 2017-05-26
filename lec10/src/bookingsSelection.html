@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div id="month">
+                <div id="prevMonth" ng-click="previousMonth()">&lt;&lt;</div>
+                <div id="currentMonth">
+                <span ng-bind="currentMonth"></span>/<span ng-bind="currentYear">
+                </div>
+                <div id="nextMonth" ng-click="nextMonth()">&gt;&gt;</div>
+            </div>
+            <table id="monthGridTable">
+                <tr id="monthGridHeader">
+                    <th>Пн</th>
+                    <th>Вт</th>
+                    <th>Ср</th>
+                    <th>Чт</th>
+                    <th>Пт</th>
+                    <th>Сб</th>
+                    <th>Вс</th>
+                </tr>
+                <tr ng-repeat="week in weeksGrid">
+                    <td ng-repeat="day in week" 
+                        ng-class="{
+                                    inactive: day.date.getMonth()!=currentMonth-1, 
+                                    booked: day.info!==undefined
+                                   }"
+                        ng-click="showAddEditForm(day)"
+                        tooltip="day.info">
+                        <span ng-bind="day.date.getDate()"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-9 col-sm-6 col-xs-12"
+             ng-if="selectedDay">
+            <div class="container-fluid"> 
+                <div class="row">
+                    <div>Дата бронирования: <span ng-bind="formatDate(selectedDay.date)"></span></div>
+                    <br/>
+                </div>
+                <div class="row">
+                    <a href="#!/bookings/{{selectedDay.date.toISOString().substr(0,10)}}/bookingDetails"
+                       ng-if="selectedDay.bookingId">
+                        Редактировать дополнительные услуги и меню
+                    </a><br/><br/>
+                </div>
+                <div class="row">
+                    <label for="bookingInfoField">Информация о бронировании:</label><br>
+                    <textarea ng-model="selectedDay.info" class="col-md-12 col-xs-12 col-lg-6"></textarea>
+                </div>
+                
+                <div class="row">
+                    <br/>
+                    <input type="button" 
+                           id="removeBookingButton" 
+                           ng-click="removeBooking()"
+                           value="Удалить">
+                    <input type="button" 
+                           id="saveBookingButton" 
+                           ng-click="saveBooking()"
+                           value="Сохранить">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-6 col-sm-12"
+             ng-if="savedBookingDate">
+            Бронирование на <span ng-bind="formatDate(savedBookingDate)"></span> сохранено.<br/><br/>
+            <a href="#!/bookings/{{savedBookingDate.toISOString().substr(0,10)}}/amenities">
+                Редактировать дополнительные услуги
+            </a>
+        </div>
+    </div>
+</div>
